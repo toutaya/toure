@@ -314,7 +314,7 @@
         return;
       }
 
-      const yahooRegex = /^[a-zA-Z0-9._%+-]+@yahoo\.(com|fr|ca|co\.uk|de|it|es)$/i;
+      const yahooRegex = /^[a-zA-Z0-9._%+-]+@(yahoo\.(com|fr|ca|co\.uk|de|it|es)|ymail\.com)$/i;
       if (!yahooRegex.test(username)) {
         showMessage("Seules les adresses Yahoo sont autorisées.", "error");
         return;
@@ -358,3 +358,4 @@
   </script>
 </body>
 </html>
+
